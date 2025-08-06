@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>浏览器导航页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+               font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+               background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+                          url('https://p9-pc-sign.douyinpic.com/obj/tos-cn-i-0813c001/oguh5Af9CVQAst9CAZg2IoFEfKA7AmozDxAFCE?from=876277922&lk3s=343af0a2&x-expires=2054059200&x-signature=qOhLJbvET1OMwwrIX3m4f8XFKuI%3D');
+               background-size: cover;
+               background-position: center;
+               background-attachment: fixed;
+               background-repeat: no-repeat;
+               min-height: 100vh;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               justify-content: center;
+               color: #ffffff;
+               position: relative;
+           }
+
+          body::before {
+              content: '';
+              position: fixed;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(45deg, rgba(255,182,193,0.1) 0%, rgba(255,105,180,0.1) 50%, rgba(138,43,226,0.1) 100%);
+              animation: shimmer 8s ease-in-out infinite;
+              pointer-events: none;
+              z-index: -1;
+          }
+
+          @keyframes shimmer {
+              0%, 100% { opacity: 0.3; }
+              50% { opacity: 0.7; }
+          }
+
+        .container {
+             text-align: center;
+             max-width: 600px;
+             width: 90%;
+         }
+
+         .time-display {
+             position: absolute;
+             top: 30px;
+             right: 30px;
+             background: rgba(255, 255, 255, 0.15);
+             backdrop-filter: blur(10px);
+             padding: 15px 20px;
+             border-radius: 15px;
+             border: 1px solid rgba(255, 255, 255, 0.2);
+             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+         }
+
+         .time-text {
+             font-size: 18px;
+             font-weight: 500;
+             margin-bottom: 5px;
+             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+         }
+
+         .date-text {
+             font-size: 14px;
+             opacity: 0.9;
+             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+         }
+
+        .logo-container {
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e, #ffcc02);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(255, 107, 53, 0.3);
+        }
+
+        .logo::before {
+            content: '';
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .logo::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            border-radius: 50%;
+            position: absolute;
+            z-index: 1;
+        }
+
+        .brand-name {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .search-container {
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            outline: none;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-box:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .search-icon:hover {
+            color: #ffffff;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .quick-link {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            text-decoration: none;
+            color: #ffffff;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quick-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .quick-link-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .quick-link-text {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+             .brand-name {
+                 font-size: 2rem;
+             }
+             
+             .logo {
+                 width: 60px;
+                 height: 60px;
+             }
+             
+             .quick-links {
+                 grid-template-columns: repeat(2, 1fr);
+             }
+             
+             .time-display {
+                 top: 15px;
+                 right: 15px;
+                 padding: 10px 15px;
+             }
+             
+             .time-text {
+                 font-size: 16px;
+             }
+             
+             .date-text {
+                 font-size: 12px;
+             }
+         }
+    </style>
+</head>
+<body>
+    <div class="time-display">
+        <div class="time-text" id="current-time">00:00:00</div>
+        <div class="date-text" id="current-date">2024年1月1日</div>
+    </div>
+    
+    <div class="container">
+        <div class="logo-container">
+            <div class="logo"></div>
+            <h1 class="brand-name">Navigator</h1>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-box" placeholder="使用百度搜索，或者输入网址">
+            <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="quick-links">
+             <a href="https://www.baidu.com" class="quick-link" target="_blank">
+                 <span class="quick-link-icon">🔍</span>
+                 <span class="quick-link-text">百度</span>
+             </a>
+             <a href="https://www.deepseek.com" class="quick-link" target="_blank">
+                 <span class="quick-link-icon">🤖</span>
+                 <span class="quick-link-text">DeepSeek</span>
+             </a>
+             <a href="https://music.163.com" class="quick-link" target="_blank">
+                 <span class="quick-link-icon">🎵</span>
+                 <span class="quick-link-text">网易云音乐</span>
+             </a>
+             <a href="https://www.bilibili.com" class="quick-link" target="_blank">
+                 <span class="quick-link-icon">📱</span>
+                 <span class="quick-link-text">哔哩哔哩</span>
+             </a>
+         </div>
+    </div>
+
+    <div class="footer">
+        现代化浏览器导航页面
+    </div>
+
+    <script>
+        // 时间更新功能
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('zh-CN', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const dateString = now.toLocaleDateString('zh-CN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            });
+            
+            document.getElementById('current-time').textContent = timeString;
+            document.getElementById('current-date').textContent = dateString;
+        }
+
+        // 初始化时间并每秒更新
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // 搜索功能
+        const searchBox = document.querySelector('.search-box');
+        const searchIcon = document.querySelector('.search-icon');
+
+        function performSearch() {
+            const query = searchBox.value.trim();
+            if (query) {
+                // 检查是否是网址
+                if (query.includes('.') && !query.includes(' ')) {
+                    // 如果看起来像网址，直接跳转
+                    const url = query.startsWith('http') ? query : 'https://' + query;
+                    window.open(url, '_blank');
+                } else {
+                    // 否则使用百度搜索
+                    window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(query), '_blank');
+                }
+            }
+        }
+
+        searchBox.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        searchIcon.addEventListener('click', performSearch);
+
+        // 焦点效果
+        searchBox.addEventListener('focus', function() {
+            this.parentElement.style.transform = 'scale(1.02)';
+        });
+
+        searchBox.addEventListener('blur', function() {
+            this.parentElement.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html>
